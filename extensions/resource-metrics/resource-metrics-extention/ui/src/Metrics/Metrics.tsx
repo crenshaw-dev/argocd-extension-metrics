@@ -81,7 +81,7 @@ export const Metrics = ({ application, resource, events, duration, setHasMetrics
             </div>
             <div className='application-metrics__ChartContainerFlex'>
               {row?.graphs?.map((graph: any) => {
-                const url = `https://localhost:8080/api/v1/application/metricsqueryruns/resource?resourceName=${row.name}-${graph.name.replaceAll("_", "-")}&namespace=${namespace}&name=metricsqueryruns&version=v1&kind=ConfigMap`
+                const url = `https://localhost:8080/api/v1/applications/metricsqueryruns/resource?resourceName=${row.name}-${graph.name.replaceAll("_", "-")}&namespace=${namespace}&name=metricsqueryruns&version=v1&kind=ConfigMap`
                 return (
                   <ChartWrapper
                     application_name={application_name}

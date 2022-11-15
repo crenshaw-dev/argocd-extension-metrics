@@ -123,7 +123,7 @@ Argo CD Team is working to implemented backend proxy [proposal](https://github.c
 8. `cd` to `extensions/resource-metrics/resource-metrics-extention/ui`
 9. Build the modified extension code with `make build`
 10. `git add . && git commit -m "my message" && git push` to push the new build
-11. `kubectl delete argocdextension argocd-metrix-ext -n argocd`
+11. `kubectl delete argocdextension argocd-metrics-ext -n argocd`
 12. Wait a few seconds for Argo CD to notice the missing resource and re-create it - this will install the new version of
     the extension in the API server
 13. Refresh the Argo CD UI to load the new extension code
