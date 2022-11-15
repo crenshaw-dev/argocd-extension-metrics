@@ -6,7 +6,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/crenshaw-dev/argocd-extension-metrics
-    targetRevision: install-instructions
+    targetRevision: from-resource
     path: manifests/quick-start
   destination:
     server: https://kubernetes.default.svc

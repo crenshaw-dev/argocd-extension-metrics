@@ -92,10 +92,7 @@ Argo CD Team is working to implemented backend proxy [proposal](https://github.c
 
 ## Developing the UI extension
 
-1. Follow the [quick start instructions](#quick-start) above to set
-2. Fork this repo and clone it (for examples, we'll assume your user name is `EXAMPLE-USER`)
-3. Create a new branch (for examples, we'll use the name `NEW-FEATURE`)
-4. Edit the [extension install manifest](manifests/extension/extension.yaml) to point to your user and branch:
+1. Edit the [extension install manifest](manifests/extension/extension.yaml) to point to your user and branch:
 
     ```yaml
     apiVersion: argoproj.io/v1alpha1
@@ -105,19 +102,35 @@ Argo CD Team is working to implemented backend proxy [proposal](https://github.c
         - web:
             url: https://github.com/EXAMPLE-USER/argocd-extension-metrics/raw/NEW-FEATURE/extensions/resource-metrics/resource-metrics-extention/ui/dist/extension.tar
     ```
+2. Edit the [bootstrap Application manifest](manifests/quick-start/argo-cd/bootstrap.yaml) to set the source URL and revision to your fork and branch
 
-5. Make changes to [extension source code](extensions/resource-metrics/resource-metrics-extention/ui)
-6. `cd` to `extensions/resource-metrics/resource-metrics-extention/ui`
-7. Build the modified extension code with `make build`
-8. `git add . && git commit -m "my message" && git push` to push the new build
-9. `kubectl delete argocdextension argocd-metrix-ext -n argocd`
-10. Wait a few seconds for Argo CD to notice the missing resource and re-create it - this will install the new version of
+    ```yaml
+    apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+      name: bootstrap
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/EXAMPLE-USER/argocd-extension-metrics
+        targetRevision: NEW-FEATURE
+    ```
+3. Commit and push those changes with `git add . && git commit -m "setup dev env" && git push`
+4. Follow the [quick start instructions](#quick-start) above to setup Argo CD and install the extension
+5. Fork this repo and clone it (for examples, we'll assume your user name is `EXAMPLE-USER`)
+6. Create a new branch (for examples, we'll use the name `NEW-FEATURE`)
+7. Make changes to [extension source code](extensions/resource-metrics/resource-metrics-extention/ui)
+8. `cd` to `extensions/resource-metrics/resource-metrics-extention/ui`
+9. Build the modified extension code with `make build`
+10. `git add . && git commit -m "my message" && git push` to push the new build
+11. `kubectl delete argocdextension argocd-metrix-ext -n argocd`
+12. Wait a few seconds for Argo CD to notice the missing resource and re-create it - this will install the new version of
     the extension in the API server
-11. Refresh the Argo CD UI to load the new extension code
+13. Refresh the Argo CD UI to load the new extension code
 
 ## Developing the metrics service
 
-1. Follow the [quick start instructions](#quick-start) above to set
+1. Follow the [quick start instructions](#quick-start) above to setup Argo CD and install the extension
 2. Make changes to the metrics service code
 3. Run `make image` to build the service
 4. Run `kind load docker-image docker.io/argoproj/argocd-metrics-server:latest` (or the equivalent for your local cluster)
