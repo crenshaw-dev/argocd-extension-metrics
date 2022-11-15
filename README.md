@@ -92,7 +92,9 @@ Argo CD Team is working to implemented backend proxy [proposal](https://github.c
 
 ## Developing the UI extension
 
-1. Edit the [extension install manifest](manifests/extension/extension.yaml) to point to your user and branch:
+1. Fork this repo and clone it (for examples, we'll assume your user name is `EXAMPLE-USER`)
+2. Create a new branch (for examples, we'll use the name `NEW-FEATURE`)
+3. Edit the [extension install manifest](manifests/extension/extension.yaml) to point to your user and branch:
 
     ```yaml
     apiVersion: argoproj.io/v1alpha1
@@ -102,7 +104,7 @@ Argo CD Team is working to implemented backend proxy [proposal](https://github.c
         - web:
             url: https://github.com/EXAMPLE-USER/argocd-extension-metrics/raw/NEW-FEATURE/extensions/resource-metrics/resource-metrics-extention/ui/dist/extension.tar
     ```
-2. Edit the [bootstrap Application manifest](manifests/quick-start/argo-cd/bootstrap.yaml) to set the source URL and revision to your fork and branch
+4. Edit the [bootstrap Application manifest](manifests/quick-start/argo-cd/bootstrap.yaml) to set the source URL and revision to your fork and branch
 
     ```yaml
     apiVersion: argoproj.io/v1alpha1
@@ -115,10 +117,8 @@ Argo CD Team is working to implemented backend proxy [proposal](https://github.c
         repoURL: https://github.com/EXAMPLE-USER/argocd-extension-metrics
         targetRevision: NEW-FEATURE
     ```
-3. Commit and push those changes with `git add . && git commit -m "setup dev env" && git push`
-4. Follow the [quick start instructions](#quick-start) above to setup Argo CD and install the extension
-5. Fork this repo and clone it (for examples, we'll assume your user name is `EXAMPLE-USER`)
-6. Create a new branch (for examples, we'll use the name `NEW-FEATURE`)
+5. Commit and push those changes with `git add . && git commit -m "setup dev env" && git push`
+6. Follow the [quick start instructions](#quick-start) above to setup Argo CD and install the extension
 7. Make changes to [extension source code](extensions/resource-metrics/resource-metrics-extention/ui)
 8. `cd` to `extensions/resource-metrics/resource-metrics-extention/ui`
 9. Build the modified extension code with `make build`
