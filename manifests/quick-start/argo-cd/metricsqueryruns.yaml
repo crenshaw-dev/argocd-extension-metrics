@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metricsqueryruns
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/crenshaw-dev/argocd-extension-metrics
+    targetRevision: from-resource
+    path: manifests/metricsqueryruns
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated: {}
