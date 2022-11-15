@@ -149,6 +149,7 @@ export const ChartWrapper = ({
     const url = `${queryPath}`
     fetch(url)
       .then(response => response.json())
+      .then(json => JSON.parse(JSON.parse(json["manifest"])["data"]["result"]))
       .then(data => {
         setChartsData({
           ...chartsData,
