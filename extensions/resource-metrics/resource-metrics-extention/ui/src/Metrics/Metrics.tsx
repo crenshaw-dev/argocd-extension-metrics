@@ -13,8 +13,8 @@ export const Metrics = ({ application, resource, events, duration, setHasMetrics
 
   const namespace = resource?.metadata?.namespace || ''
   const application_name = application?.metadata?.name || ''
-  const project = application?.spec?.project || ''
-  const uid = application?.metadata?.uid || ''
+  // const project = application?.spec?.project || ''
+  // const uid = application?.metadata?.uid || ''
 
   useEffect(() => {
     const url = `https://localhost:8081/api/extension/metrics/applications/${application_name}/groupkinds/${resource.kind.toLowerCase()}/dashboards`
@@ -81,7 +81,7 @@ export const Metrics = ({ application, resource, events, duration, setHasMetrics
             </div>
             <div className='application-metrics__ChartContainerFlex'>
               {row?.graphs?.map((graph: any) => {
-                const url = `https://localhost:8081/api/extension/metrics/applications/${application_name}/groupkinds/${resource.kind.toLowerCase()}/rows/${row.name}/graphs/${graph.name}?name=${resourceName}.*&namespace=${namespace}&application_name=${application_name}&project=${project}&uid=${uid}&duration=${duration}`
+                const url = `https://localhost:8080/api/v1/application/metricsqueryruns/resource?resourceName=${row.name}-${graph.name.replace("_", "-")}&namespace=${namespace}&name=${application_name}&version=v1&kind=ConfigMap`
                 return (
                   <ChartWrapper
                     application_name={application_name}
