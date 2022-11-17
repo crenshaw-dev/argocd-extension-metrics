@@ -144,7 +144,6 @@ export const ChartWrapper = ({
     return formattedData
   }, [labelKey, groupBy, name, title, metric, yUnit])
 
-
   useEffect(() => {
     const url = `${queryPath}`
     fetch(url)

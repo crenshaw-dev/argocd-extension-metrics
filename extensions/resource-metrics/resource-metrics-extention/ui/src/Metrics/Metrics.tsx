@@ -165,7 +165,7 @@ export const Metrics = ({ application, resource, events, duration, setHasMetrics
             </div>
             <div className='application-metrics__ChartContainerFlex'>
               {row?.graphs?.map((graph: any) => {
-                const url = `https://localhost:8080/api/v1/applications/metricsqueryruns/resource?resourceName=rollouts-demo&namespace=default&name=metricsqueryruns&version=v1&kind=MetricQueryRun`
+                const url = `https://localhost:8080/api/v1/applications/metricsqueryruns/resource?resourceName=rollouts-demo&namespace=default&name=metricsqueryruns&group=prometheus.metrics.argoproj.io&version=v1&kind=MetricQueryRun`
                 return (
                   <ChartWrapper
                     application_name={application_name}
