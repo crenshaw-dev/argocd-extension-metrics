@@ -150,7 +150,7 @@ export const ChartWrapper = ({
     fetch(url)
       .then(response => response.json())
       .then(json => JSON.parse(JSON.parse(json["manifest"])["spec"]["results"]
-          .find((res: {name: string, result: string}) => res.name == metric)?.result))
+          .find((res: {name: string, result: string}) => res.name == metric)?.result || '[]'))
       .then(data => {
         setChartsData({
           ...chartsData,
