@@ -5,6 +5,7 @@ const groupKind = 'argoproj.io/Rollout';
 const extName = 'Metrics';
 
 const config = {
+  mode: 'development',
   entry: {
     extension: './src/index.tsx',
   },
