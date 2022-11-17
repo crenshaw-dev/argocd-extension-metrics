@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import * as React from 'react'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import ChartWrapper from './Chart/ChartWrapper'
 import './Metrics.scss'
 
-const dashboard = {
+const data = {
   "name": "",
   "groupKind": "pod",
   "refreshRate": "",
@@ -23,7 +23,6 @@ const dashboard = {
           "description": "",
           "graphType": "line",
           "metricName": "pod",
-          "queryExpression": "sum(rate(container_cpu_usage_seconds_total{pod=~\"guestbook-*\", image!=\"\", container!=\"POD\", container!=\"\", container_name!=\"POD\"}[5m])) by (pod)",
           "yAxisUnit": "",
           "valueRounding": 0
         },
@@ -33,7 +32,6 @@ const dashboard = {
           "description": "",
           "graphType": "pie",
           "metricName": "pod",
-          "queryExpression": "sum(rate(container_cpu_usage_seconds_total{pod=~\"guestbook-*\", container!=\"POD\", image!=\"\", container!=\"\", container_name!=\"POD\"}[5m])) by (pod)",
           "yAxisUnit": "",
           "valueRounding": 0
         },
@@ -43,7 +41,6 @@ const dashboard = {
           "description": "",
           "graphType": "line",
           "metricName": "pod",
-          "queryExpression": "sum(rate(container_memory_usage_bytes{pod=~\"guestbook-*\", container!=\"POD\", image!=\"\", container!=\"\", container_name!=\"POD\"}[5m])) by (pod)",
           "yAxisUnit": "",
           "valueRounding": 0
         },
@@ -53,7 +50,6 @@ const dashboard = {
           "description": "",
           "graphType": "pie",
           "metricName": "pod",
-          "queryExpression": "sum(rate(container_memory_usage_bytes{pod=~\"guestbook-*\", container!=\"POD\", image!=\"\", container!=\"\", container_name!=\"POD\"}[5m])) by (pod)",
           "yAxisUnit": "",
           "valueRounding": 0
         }
@@ -70,7 +66,6 @@ const dashboard = {
           "description": "",
           "graphType": "line",
           "metricName": "container",
-          "queryExpression": "sum(rate(container_cpu_usage_seconds_total{pod=~\"guestbook-*\", image!=\"\", container!=\"POD\", container!=\"\", container_name!=\"POD\"}[5m])) by (container)",
           "yAxisUnit": "",
           "valueRounding": 0
         },
@@ -80,7 +75,6 @@ const dashboard = {
           "description": "",
           "graphType": "pie",
           "metricName": "container",
-          "queryExpression": "sum(rate(container_cpu_usage_seconds_total{pod=~\"guestbook-*\", image!=\"\",container!=\"POD\", container!=\"\", container_name!=\"POD\"}[5m])) by (container)",
           "yAxisUnit": "",
           "valueRounding": 0
         },
@@ -90,7 +84,6 @@ const dashboard = {
           "description": "",
           "graphType": "line",
           "metricName": "container",
-          "queryExpression": "sum(rate(container_memory_usage_bytes{pod=~\"guestbook-*\", image!=\"\", container!=\"POD\", container!=\"\", container_name!=\"POD\"}[5m])) by (container)",
           "yAxisUnit": "",
           "valueRounding": 0
         },
@@ -100,7 +93,6 @@ const dashboard = {
           "description": "",
           "graphType": "pie",
           "metricName": "container",
-          "queryExpression": "sum(rate(container_memory_usage_bytes{pod=~\"guestbook-*\", image!=\"\", container!=\"POD\", container!=\"\", container_name!=\"POD\"}[5m])) by (container)",
           "yAxisUnit": "",
           "valueRounding": 0
         }
@@ -117,33 +109,17 @@ export const Metrics = ({ application, resource, events, duration, setHasMetrics
   const [highlight, setHighlight] = useState<any>({})
   const [selectedTab, setSelectedTab] = useState<string>("")
 
-  const namespace = resource?.metadata?.namespace || ''
+  // const namespace = resource?.metadata?.namespace || ''
   const application_name = application?.metadata?.name || ''
   // const project = application?.spec?.project || ''
   // const uid = application?.metadata?.uid || ''
 
-  useEffect(() => {
-    const url = `https://localhost:8081/api/extension/metrics/applications/${application_name}/groupkinds/${resource.kind.toLowerCase()}/dashboards`
-    fetch(url)
-      .then(response => {
-        if (response.status > 399) {
-          throw new Error("No metrics");
-        }
-        return response.json()
-      })
-      .then((data: any) => {
-        setIsLoading(false)
-        setHasMetrics(true)
-        setDashboard(data)
-        if (data?.tabs?.length) {
-          setSelectedTab(data.tabs[0])
-        }
-      }).catch(err => {
-        setHasMetrics(false)
-        setIsLoading(false)
-        console.error('res.data', err)
-      });
-  }, [application_name, resource?.kind])
+  setIsLoading(false)
+  setHasMetrics(true)
+  setDashboard(data)
+  if (data.tabs.length) {
+    setSelectedTab(data.tabs[0])
+  }
 
   return (
     <div>
@@ -187,7 +163,7 @@ export const Metrics = ({ application, resource, events, duration, setHasMetrics
             </div>
             <div className='application-metrics__ChartContainerFlex'>
               {row?.graphs?.map((graph: any) => {
-                const url = `https://localhost:8080/api/v1/applications/metricsqueryruns/resource?resourceName=${row.name}-${graph.name.replaceAll("_", "-")}&namespace=${namespace}&name=metricsqueryruns&version=v1&kind=ConfigMap`
+                const url = `https://localhost:8080/api/v1/applications/metricsqueryruns/resource?resourceName=rollouts-demo&namespace=default&name=metricsqueryruns&version=v1&kind=MetricQueryRun`
                 return (
                   <ChartWrapper
                     application_name={application_name}
