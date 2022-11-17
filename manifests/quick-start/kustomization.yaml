@@ -1,4 +1,5 @@
 resources:
+  - https://github.com/crenshaw-dev/metrics//config/?ref=kind
   - argo-cd
 
 helmCharts:

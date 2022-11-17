@@ -5,9 +5,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/crenshaw-dev/argocd-extension-metrics
-    targetRevision: from-resource
-    path: manifests/metricsqueryruns
+    repoURL: https://github.com/crenshaw-dev/metrics
+    targetRevision: kind
+    path: config/sample
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd

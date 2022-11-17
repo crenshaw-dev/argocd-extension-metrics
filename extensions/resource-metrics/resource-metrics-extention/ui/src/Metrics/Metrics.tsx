@@ -4,6 +4,112 @@ import { useState, useEffect } from 'react'
 import ChartWrapper from './Chart/ChartWrapper'
 import './Metrics.scss'
 
+const dashboard = {
+  "name": "",
+  "groupKind": "pod",
+  "refreshRate": "",
+  "tabs": [
+    "Golden Signal"
+  ],
+  "rows": [
+    {
+      "name": "pod",
+      "title": "Pods",
+      "tab": "Golden Signal",
+      "graphs": [
+        {
+          "name": "pod_cpu_line",
+          "title": "CPU",
+          "description": "",
+          "graphType": "line",
+          "metricName": "pod",
+          "queryExpression": "sum(rate(container_cpu_usage_seconds_total{pod=~\"guestbook-*\", image!=\"\", container!=\"POD\", container!=\"\", container_name!=\"POD\"}[5m])) by (pod)",
+          "yAxisUnit": "",
+          "valueRounding": 0
+        },
+        {
+          "name": "pod_cpu_pie",
+          "title": "CPU Avg",
+          "description": "",
+          "graphType": "pie",
+          "metricName": "pod",
+          "queryExpression": "sum(rate(container_cpu_usage_seconds_total{pod=~\"guestbook-*\", container!=\"POD\", image!=\"\", container!=\"\", container_name!=\"POD\"}[5m])) by (pod)",
+          "yAxisUnit": "",
+          "valueRounding": 0
+        },
+        {
+          "name": "pod_memory_line",
+          "title": "Memory",
+          "description": "",
+          "graphType": "line",
+          "metricName": "pod",
+          "queryExpression": "sum(rate(container_memory_usage_bytes{pod=~\"guestbook-*\", container!=\"POD\", image!=\"\", container!=\"\", container_name!=\"POD\"}[5m])) by (pod)",
+          "yAxisUnit": "",
+          "valueRounding": 0
+        },
+        {
+          "name": "pod_memory_pie",
+          "title": "Mem Avg",
+          "description": "",
+          "graphType": "pie",
+          "metricName": "pod",
+          "queryExpression": "sum(rate(container_memory_usage_bytes{pod=~\"guestbook-*\", container!=\"POD\", image!=\"\", container!=\"\", container_name!=\"POD\"}[5m])) by (pod)",
+          "yAxisUnit": "",
+          "valueRounding": 0
+        }
+      ]
+    },
+    {
+      "name": "container",
+      "title": "Containers",
+      "tab": "Golden Signal",
+      "graphs": [
+        {
+          "name": "container_cpu_line",
+          "title": "CPU",
+          "description": "",
+          "graphType": "line",
+          "metricName": "container",
+          "queryExpression": "sum(rate(container_cpu_usage_seconds_total{pod=~\"guestbook-*\", image!=\"\", container!=\"POD\", container!=\"\", container_name!=\"POD\"}[5m])) by (container)",
+          "yAxisUnit": "",
+          "valueRounding": 0
+        },
+        {
+          "name": "container_cpu_pie",
+          "title": "CPU Avg",
+          "description": "",
+          "graphType": "pie",
+          "metricName": "container",
+          "queryExpression": "sum(rate(container_cpu_usage_seconds_total{pod=~\"guestbook-*\", image!=\"\",container!=\"POD\", container!=\"\", container_name!=\"POD\"}[5m])) by (container)",
+          "yAxisUnit": "",
+          "valueRounding": 0
+        },
+        {
+          "name": "container_memory_line",
+          "title": "Memory",
+          "description": "",
+          "graphType": "line",
+          "metricName": "container",
+          "queryExpression": "sum(rate(container_memory_usage_bytes{pod=~\"guestbook-*\", image!=\"\", container!=\"POD\", container!=\"\", container_name!=\"POD\"}[5m])) by (container)",
+          "yAxisUnit": "",
+          "valueRounding": 0
+        },
+        {
+          "name": "container_memory_pie",
+          "title": "Mem Avg",
+          "description": "",
+          "graphType": "pie",
+          "metricName": "container",
+          "queryExpression": "sum(rate(container_memory_usage_bytes{pod=~\"guestbook-*\", image!=\"\", container!=\"POD\", container!=\"\", container_name!=\"POD\"}[5m])) by (container)",
+          "yAxisUnit": "",
+          "valueRounding": 0
+        }
+      ]
+    }
+  ],
+  "providerType": "prometheus"
+}
+
 export const Metrics = ({ application, resource, events, duration, setHasMetrics, isLoading, setIsLoading }: any) => {
   const resourceName = resource.kind === 'Application' ? '' : resource?.metadata?.name
   const [dashboard, setDashboard] = useState<any>({})
