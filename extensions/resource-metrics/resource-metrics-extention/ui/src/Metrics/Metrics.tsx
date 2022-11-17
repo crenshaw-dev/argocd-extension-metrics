@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import * as React from 'react'
-import { useState } from 'react'
+import {useEffect, useState} from 'react'
 import ChartWrapper from './Chart/ChartWrapper'
 import './Metrics.scss'
 
@@ -114,12 +114,14 @@ export const Metrics = ({ application, resource, events, duration, setHasMetrics
   // const project = application?.spec?.project || ''
   // const uid = application?.metadata?.uid || ''
 
-  setIsLoading(false)
-  setHasMetrics(true)
-  setDashboard(data)
-  if (data.tabs.length) {
-    setSelectedTab(data.tabs[0])
-  }
+  useEffect(() => {
+    setIsLoading(false)
+    setHasMetrics(true)
+    setDashboard(data)
+    if (data?.tabs?.length) {
+      setSelectedTab(data.tabs[0])
+    }
+  }, []);
 
   return (
     <div>
